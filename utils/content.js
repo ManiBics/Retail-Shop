@@ -10,6 +10,7 @@ async function getEntries(content_type, queryParams) {
       : process.env.NEXT_PUBLIC_CONTENTFUL_DELIVERY_TOKEN,
     space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID,
     host: IS_DEV ? "preview.contentful.com" : "cdn.contentful.com",
+    environment: process.env.NEXT_PUBLIC_CONTENTFUL_ENVIRONMENT,
   });
 
   const entries = await client.getEntries({
@@ -29,8 +30,6 @@ export async function getPagePaths() {
 }
 
 export async function getPageFromSlug(slug, locale) {
-  console.log("calling apissss");
-
   try {
     const { items } = await getEntries(PAGE_CONTENT_TYPE_ID, {
       "fields.slug": slug,

@@ -1,10 +1,17 @@
 "use client";
 import { useEffect, useState } from "react";
 import { getPageFromSlug } from "../../utils/content";
-import NotFound from "../../components/NotFound";
+import NotFound from "../../components/common/NotFound";
 import { getLocale } from "../../utils";
+import Header from "@/components/common/Header";
+import Footer from "@/components/common/Footer";
+import WelcomeBanner from "@/components/common/WelcomeBanner";
 
-const componentMap = {};
+const componentMap = {
+  headerSection: Header,
+  home: WelcomeBanner,
+  footerSection: Footer,
+};
 
 export default function ComposablePage({ params }) {
   const [data, setData] = useState([]);
