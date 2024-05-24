@@ -72,7 +72,7 @@ const ProductList = ({ products }) => {
 // SectionHeader component
 const SectionHeader = ({ title }) => {
   return (
-    <h2 data-sb-field-path="title" className="text-3xl font-semibold mb-8 mt-8">
+    <h2 data-sb-field-path="title" className="text-3xl font-semibold ">
       {title}
     </h2>
   );
@@ -207,33 +207,36 @@ const ProductListing = (props) => {
   return (
     <div data-sb-object-id={props.id}>
       <div className="px-4">
-        <div className="flex items-center mb-4 ">
-          <input
-            type="text"
-            placeholder={props.searchPlaceholder}
-            data-sb-field-path="searchPlaceholder"
-            className="px-4 py-2 mr-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-600"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <select
-            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-600"
-            value={sortType}
-            onChange={(e) => setSortType(e.target.value)}
-          >
-            {props.sortingOptions.map((item) => (
-              <option
-                key={item.id}
-                data-sb-field-path={`${item.id}:title`}
-                value={item.description}
-              >
-                {item.title}
-              </option>
-            ))}
-          </select>
+        <div className="flex justify-between mb-8 ">
+          <SectionHeader title={props.title} />
+
+          <div>
+            <input
+              type="text"
+              placeholder={props.searchPlaceholder}
+              data-sb-field-path="searchPlaceholder"
+              className="px-4 py-2 mr-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-600"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <select
+              className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-600"
+              value={sortType}
+              onChange={(e) => setSortType(e.target.value)}
+            >
+              {props.sortingOptions.map((item) => (
+                <option
+                  key={item.id}
+                  data-sb-field-path={`${item.id}:title`}
+                  value={item.description}
+                >
+                  {item.title}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
-        <SectionHeader title={props.title} />
         <ProductList products={currentProducts} />
         <Pagination
           productsPerPage={productsPerPage}
