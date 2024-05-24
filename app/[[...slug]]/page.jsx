@@ -3,14 +3,22 @@ import { useEffect, useState } from "react";
 import { getPageFromSlug } from "../../utils/content";
 import NotFound from "../../components/common/NotFound";
 import { getLocale } from "../../utils";
-import Header from "@/components/common/Header";
-import Footer from "@/components/common/Footer";
-import WelcomeBanner from "@/components/common/WelcomeBanner";
+import RetailHeader from "@/components/RetailShop/Header";
+import CustomerSay from "@/components/RetailShop/Home/CustomerSay";
+import RetailFooter from "@/components/RetailShop/Footer";
+import WelcomeBanner from "@/components/RetailShop/Home/WelcomeBanner";
+import FeaturedProducts from "@/components/RetailShop/Home/FeaturedProducts";
+import ListingBanner from "@/components/RetailShop/Products/ListingBanner";
+import ProductListing from "@/components/RetailShop/Products/ProductListing";
 
 const componentMap = {
-  headerSection: Header,
-  home: WelcomeBanner,
-  footerSection: Footer,
+  headerSection: RetailHeader,
+  stats: FeaturedProducts,
+  bulletPoint: CustomerSay,
+  footerSection: RetailFooter,
+  brandSection: WelcomeBanner,
+  listingBanner: ListingBanner,
+  productListing: ProductListing,
 };
 
 export default function ComposablePage({ params }) {
@@ -19,7 +27,7 @@ export default function ComposablePage({ params }) {
   useEffect(() => {
     (async () => {
       const { locale = "en-US" } = getLocale(params?.slug);
-      const slug = "/" + (params?.slug ?? [""]).join("/");
+      const slug = "/" + (params?.slug ?? [""]).join("/").replace("index", "");
       const page = await getPageFromSlug(slug, locale);
       setData(page);
     })();

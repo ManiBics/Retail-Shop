@@ -3,7 +3,7 @@ import Popover from "@mui/material/Popover";
 import { useParams, useRouter } from "next/navigation";
 import { getLocale } from "../../utils";
 
-export default function BasicPopover(props) {
+export default function LanguageSelection(props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const params = useParams();
   const router = useRouter();
