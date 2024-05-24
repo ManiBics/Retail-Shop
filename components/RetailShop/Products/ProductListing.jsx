@@ -156,6 +156,7 @@ const BrandBanner = (props) => {
       <div className="container mx-auto flex justify-center items-center space-x-14">
         {props.brandsLogo.map((item) => (
           <img
+            key={item.id}
             data-sb-object-id={item.id}
             className="h-14"
             src={item.src}
@@ -222,6 +223,7 @@ const ProductListing = (props) => {
           >
             {props.sortingOptions.map((item) => (
               <option
+                key={item.id}
                 data-sb-field-path={`${item.id}:title`}
                 value={item.description}
               >
