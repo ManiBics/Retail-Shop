@@ -10,6 +10,7 @@ import WelcomeBanner from "@/components/RetailShop/Home/WelcomeBanner";
 import FeaturedProducts from "@/components/RetailShop/Home/FeaturedProducts";
 import ListingBanner from "@/components/RetailShop/Products/ListingBanner";
 import ProductListing from "@/components/RetailShop/Products/ProductListing";
+import CartProvider from "@/context/CartContext";
 
 const componentMap = {
   headerSection: RetailHeader,
@@ -34,7 +35,7 @@ export default function ComposablePage({ params }) {
   }, [params?.slug]);
 
   return (
-    <div>
+    <CartProvider>
       {data?.sections?.map((section, idx) => {
         const Component = componentMap[section.type];
         if (!Component)
@@ -46,6 +47,6 @@ export default function ComposablePage({ params }) {
         return <Component key={idx} {...section} />;
       })}
       {data.error && <NotFound />}
-    </div>
+    </CartProvider>
   );
 }

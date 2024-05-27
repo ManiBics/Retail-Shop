@@ -1,8 +1,13 @@
 import Link from "next/link";
 import React from "react";
 import LanguageSelection from "../common/LanguageSelection";
+import { useCart } from "@/context/CartContext";
+import { Badge } from "@mui/material";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 
 const RetailHeader = (props) => {
+  const { cart } = useCart();
+
   return (
     <header
       data-sb-object-id={props.id}
@@ -30,6 +35,9 @@ const RetailHeader = (props) => {
               </Link>
             )
           )}
+          <Badge badgeContent={cart?.lineItems?.length} color="primary">
+            <ShoppingCartOutlinedIcon color="action" />
+          </Badge>
         </nav>
       </div>
     </header>

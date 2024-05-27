@@ -18,20 +18,6 @@ const RetailFooter = (props) => {
           <p data-sb-field-path="logoDescription" className="mt-4">
             {props.logoDescription}
           </p>
-          <div className="mt-6">
-            <a href="#" className="text-blue-400 hover:text-blue-500">
-              <i className="fab fa-facebook-f"></i>
-            </a>
-            <a href="#" className="ml-4 text-blue-400 hover:text-blue-500">
-              <i className="fab fa-twitter"></i>
-            </a>
-            <a href="#" className="ml-4 text-blue-400 hover:text-blue-500">
-              <i className="fab fa-instagram"></i>
-            </a>
-            <a href="#" className="ml-4 text-blue-400 hover:text-blue-500">
-              <i className="fab fa-linkedin"></i>
-            </a>
-          </div>
         </div>
         <div className="md:flex md:space-x-12">
           {props.titleAndLinks.map((item) => (

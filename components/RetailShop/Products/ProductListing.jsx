@@ -1,9 +1,19 @@
-import React, { useEffect, useState } from "react";
-
-// Banner component
+import { useCart } from "@/context/CartContext";
+import React, { useState, useEffect } from "react";
 
 // ProductCard component
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, addItem, removeItem, isInCart }) => {
+  const inCart = isInCart(product.productTitle);
+  const CartButton = inCart ? product.removeButton : product.cartButton;
+
+  const handleCartAction = () => {
+    if (inCart) {
+      removeItem(inCart.id);
+    } else {
+      addItem(product);
+    }
+  };
+
   return (
     <div
       data-sb-object-id={product.id}
@@ -44,12 +54,14 @@ const ProductCard = ({ product }) => {
               {product.pricevalue}
             </span>
           </div>
-          {product.cartButton && (
+
+          {CartButton && (
             <button
-              data-sb-field-path={`${product?.cartButton.id}:label`}
+              onClick={handleCartAction}
+              data-sb-field-path={`${CartButton.id}:label`}
               className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded"
             >
-              {product.cartButton.label}
+              {CartButton.label}
             </button>
           )}
         </div>
@@ -60,10 +72,18 @@ const ProductCard = ({ product }) => {
 
 // ProductList component
 const ProductList = ({ products }) => {
+  const { addItem, removeItem, isInCart } = useCart();
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
       {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
+        <ProductCard
+          addItem={addItem}
+          removeItem={removeItem}
+          isInCart={isInCart}
+          key={product.id}
+          product={product}
+        />
       ))}
     </div>
   );
