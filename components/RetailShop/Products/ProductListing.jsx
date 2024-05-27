@@ -205,13 +205,13 @@ const ProductListing = (props) => {
   const products = props.products;
   // Filter products by search query
   const filteredProducts = products.filter((product) =>
-    product.productTitle?.toLowerCase()?.includes(searchQuery.toLowerCase())
+    product.productTitle1?.toLowerCase()?.includes(searchQuery.toLowerCase())
   );
 
   // Sort products
   const sortedProducts = filteredProducts.sort((a, b) => {
     if (sortType === "name") {
-      return a.productTitle.localeCompare(b.productTitle);
+      return a.productTitle1.localeCompare(b.productTitle1);
     } else if (sortType === "priceAsc") {
       return a.pricevalue - b.pricevalue;
     } else if (sortType === "priceDesc") {
@@ -232,7 +232,7 @@ const ProductListing = (props) => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div data-sb-object-id={props.id}>
+    <div data-sb-object-id={props.id} className="mt-8">
       <div className="px-4">
         <div className="flex justify-between mb-8 ">
           <SectionHeader title={props.title} />

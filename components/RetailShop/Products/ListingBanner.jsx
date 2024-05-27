@@ -4,7 +4,7 @@ const ListingBanner = (props) => {
   return (
     <div
       data-sb-object-id={props.id}
-      className={`relative bg-blue-200 py-8 px-4 mb-8  text-center text-blue-800 font-semibold`}
+      className={`relative bg-blue-200 py-8 px-4  text-center text-blue-800 font-semibold`}
     >
       <img
         src={props.banner.src}
