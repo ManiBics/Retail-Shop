@@ -1,6 +1,8 @@
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const WelcomeBanner = (props) => {
+  const router = useRouter();
   return (
     <section
       className="bg-cover bg-center h-96"
@@ -26,8 +28,11 @@ const WelcomeBanner = (props) => {
 
           {props.button && (
             <button
+              onClick={() => {
+                router.push("/products");
+              }}
               data-sb-field-path={`${props.button.id}:name`}
-              className="mt-8 px-6 py-3 bg-blue-600 text-white rounded-full shadow-lg transform transition-transform hover:scale-105"
+              className="mt-8 px-6 py-3 bg-[#1976d2] text-white rounded-full shadow-lg transform transition-transform hover:scale-105"
             >
               {props.button.name}
             </button>

@@ -1,3 +1,5 @@
+import { Option } from "@mui/joy";
+
 export const getLocale = (slug, url = "/") => {
   let locale = undefined;
   const newSlug = [];
@@ -17,3 +19,19 @@ export const getLocale = (slug, url = "/") => {
   });
   return { locale, newSlug };
 };
+
+export function optionFrom1ToN(N) {
+  let result = [
+    <Option value={0} key={0}>
+      0
+    </Option>,
+  ];
+  for (let i = 1; i <= N; i++) {
+    result.push(
+      <Option value={i} key={i}>
+        {i}
+      </Option>
+    );
+  }
+  return result;
+}

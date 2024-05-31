@@ -29,18 +29,24 @@ export async function getPagePaths() {
   });
 }
 
-export async function getPageFromSlug(slug, locale) {
+export async function getPageFromSlug(slug, locale, pageContentType) {
   try {
-    const { items } = await getEntries(PAGE_CONTENT_TYPE_ID, {
-      "fields.slug": slug,
-      locale,
-    });
+    const { items } = await getEntries(
+      pageContentType || PAGE_CONTENT_TYPE_ID,
+      {
+        "fields.slug": slug,
+        locale,
+      }
+    );
     let page = (items ?? [])[0];
     if (!page && slug !== "/" && slug.startsWith("/")) {
-      const { items } = await getEntries(PAGE_CONTENT_TYPE_ID, {
-        "fields.slug": slug.slice(1),
-        locale,
-      });
+      const { items } = await getEntries(
+        pageContentType || PAGE_CONTENT_TYPE_ID,
+        {
+          "fields.slug": slug.slice(1),
+          locale,
+        }
+      );
       page = (items ?? [])[0];
     }
     if (!page) return { error: true };

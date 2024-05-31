@@ -4,9 +4,11 @@ import LanguageSelection from "../common/LanguageSelection";
 import { useCart } from "@/context/CartContext";
 import { Badge } from "@mui/material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import { useRouter } from "next/navigation";
 
 const RetailHeader = (props) => {
   const { cart } = useCart();
+  const router = useRouter();
 
   return (
     <header
@@ -35,7 +37,12 @@ const RetailHeader = (props) => {
               </Link>
             )
           )}
-          <Badge badgeContent={cart?.lineItems?.length} color="primary">
+          <Badge
+            onClick={() => router.push("/cart")}
+            badgeContent={cart?.lineItems?.length}
+            color="primary"
+            className="cursor-pointer"
+          >
             <ShoppingCartOutlinedIcon color="action" />
           </Badge>
         </nav>

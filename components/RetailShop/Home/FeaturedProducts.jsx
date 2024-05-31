@@ -39,7 +39,7 @@ const FeaturedProducts = (props) => {
                 </div>
                 <button
                   data-sb-field-path={`${item.cartButton.id}:label`}
-                  className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-full shadow-md transform transition-transform hover:scale-105"
+                  className="mt-4 px-4 py-2 bg-[#1976d2] text-white rounded-full shadow-md transform transition-transform hover:scale-105"
                 >
                   {item.cartButton.label}
                 </button>

@@ -1,18 +1,22 @@
 import { useCart } from "@/context/CartContext";
+import { Button, Typography } from "@mui/material";
 import React, { useState, useEffect } from "react";
+import Select from "@mui/joy/Select";
+import { optionFrom1ToN } from "@/utils";
 
 // ProductCard component
-const ProductCard = ({ product, addItem, removeItem, isInCart }) => {
+const ProductCard = ({ product, addItem, isInCart, updateItemQuantity }) => {
   const inCart = isInCart(product.productTitle);
   const CartButton = inCart ? product.removeButton : product.cartButton;
+  const quantity = inCart?.quantity || 1;
 
-  const handleCartAction = () => {
-    if (inCart) {
-      removeItem(inCart.id);
-    } else {
-      addItem(product);
-    }
+  const handleAddItem = () => {
+    addItem(product);
   };
+
+  const getOptions = optionFrom1ToN(
+    inCart?.variant?.availability?.availableQuantity
+  );
 
   return (
     <div
@@ -51,19 +55,37 @@ const ProductCard = ({ product, addItem, removeItem, isInCart }) => {
               data-sb-field-path="pricevalue"
               className="text-gray-900 font-semibold text-lg"
             >
-              {product.pricevalue}
+              {(quantity * product.pricevalue).toFixed(2)}
             </span>
           </div>
 
-          {CartButton && (
-            <button
-              onClick={handleCartAction}
-              data-sb-field-path={`${CartButton.id}:label`}
-              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded"
-            >
-              {CartButton.label}
-            </button>
-          )}
+          <div className="flex items-center">
+            {inCart &&
+              (getOptions.length > 1 ? (
+                <Select
+                  color="primary"
+                  placeholder="Quantity"
+                  onChange={(event, newValue) => {
+                    updateItemQuantity(inCart.id, newValue, product.pricevalue);
+                  }}
+                  value={quantity}
+                  className="w-28"
+                >
+                  {getOptions}
+                </Select>
+              ) : (
+                <Typography color="error">Out of Stock</Typography>
+              ))}
+            {!inCart && CartButton && (
+              <Button
+                onClick={handleAddItem}
+                data-sb-field-path={`${CartButton.id}:label`}
+                variant="contained"
+              >
+                {CartButton.label}
+              </Button>
+            )}
+          </div>
         </div>
       </div>
     </div>
@@ -72,17 +94,17 @@ const ProductCard = ({ product, addItem, removeItem, isInCart }) => {
 
 // ProductList component
 const ProductList = ({ products }) => {
-  const { addItem, removeItem, isInCart } = useCart();
+  const { addItem, isInCart, updateItemQuantity } = useCart();
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
       {products.map((product) => (
         <ProductCard
           addItem={addItem}
-          removeItem={removeItem}
           isInCart={isInCart}
           key={product.id}
           product={product}
+          updateItemQuantity={updateItemQuantity}
         />
       ))}
     </div>
@@ -151,7 +173,7 @@ const Pagination = ({
               onClick={() => paginate(number)}
               className={`px-3 py-1 ${
                 currentPage === number
-                  ? "bg-blue-600 text-white"
+                  ? "bg-[#1976d2] text-white"
                   : "bg-gray-200 text-gray-800"
               } rounded-md focus:outline-none`}
             >
