@@ -10,7 +10,7 @@ const getCart = async (id) => {
   }
 };
 
-const createCart = async () => {
+const createCart = async (customerId) => {
   try {
     const response = await fetch("/api/createCart", {
       method: "POST",
@@ -27,6 +27,7 @@ const createCart = async () => {
           state: "",
         },
         inventoryMode: "TrackOnly",
+        customerId,
       }),
     });
     const data = await response.json();

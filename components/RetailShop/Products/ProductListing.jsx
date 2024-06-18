@@ -3,6 +3,7 @@ import { Button, Typography } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import Select from "@mui/joy/Select";
 import { optionFrom1ToN } from "@/utils";
+import Pagination from "@/components/common/Pagination";
 
 // ProductCard component
 const ProductCard = ({ product, addItem, isInCart, updateItemQuantity }) => {
@@ -120,84 +121,6 @@ const SectionHeader = ({ title }) => {
   );
 };
 
-// Pagination component
-const Pagination = ({
-  productsPerPage,
-  totalProducts,
-  paginate,
-  currentPage,
-  PreviousText,
-  NextText,
-}) => {
-  const pageNumbers = [];
-
-  for (let i = 1; i <= Math.ceil(totalProducts / productsPerPage); i++) {
-    pageNumbers.push(i);
-  }
-
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }, [currentPage]);
-
-  const handlePrevious = () => {
-    if (currentPage > 1) {
-      paginate(currentPage - 1);
-    }
-  };
-
-  const handleNext = () => {
-    if (currentPage < Math.ceil(totalProducts / productsPerPage)) {
-      paginate(currentPage + 1);
-    }
-  };
-
-  return (
-    <nav className="mt-10">
-      <ul className="flex justify-center">
-        <li className="mx-1">
-          <button
-            data-sb-field-path="paginationPrevious"
-            onClick={handlePrevious}
-            disabled={currentPage === 1}
-            className="px-3 py-1 bg-gray-200 text-gray-800 rounded-md focus:outline-none"
-          >
-            {PreviousText}
-          </button>
-        </li>
-        {pageNumbers.map((number) => (
-          <li key={number} className="mx-1">
-            <button
-              onClick={() => paginate(number)}
-              className={`px-3 py-1 ${
-                currentPage === number
-                  ? "bg-[#1976d2] text-white"
-                  : "bg-gray-200 text-gray-800"
-              } rounded-md focus:outline-none`}
-            >
-              {number}
-            </button>
-          </li>
-        ))}
-        <li className="mx-1">
-          <button
-            data-sb-field-path="paginationNext"
-            onClick={handleNext}
-            disabled={
-              currentPage === Math.ceil(totalProducts / productsPerPage)
-            }
-            className="px-3 py-1 bg-gray-200 text-gray-800 rounded-md focus:outline-none"
-          >
-            {NextText}
-          </button>
-        </li>
-      </ul>
-    </nav>
-  );
-};
-
 // BrandBanner component
 const BrandBanner = (props) => {
   return (
@@ -290,7 +213,7 @@ const ProductListing = (props) => {
         <Pagination
           productsPerPage={productsPerPage}
           totalProducts={sortedProducts.length}
-          paginate={paginate}
+          setPaginate={paginate}
           currentPage={currentPage}
           PreviousText={props.paginationPrevious}
           NextText={props.paginationNext}

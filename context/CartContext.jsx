@@ -10,6 +10,7 @@ import {
 } from "./apiHandler";
 import { useRouter } from "next/navigation";
 import { useBackDrop } from "./BackDropContext";
+import { useUser } from "./UserContext";
 
 const CartContext = createContext();
 
@@ -17,24 +18,27 @@ const CartProvider = ({ children }) => {
   const [cart, setCart] = useState(null);
   const router = useRouter();
   const { showBackDrop, hideBackDrop } = useBackDrop();
+  const { user } = useUser();
 
   useEffect(() => {
     (async () => {
       const storedCartId = localStorage.getItem("cartId");
       showBackDrop();
-      if (storedCartId) {
-        const cartData = await getCart(storedCartId);
-        setCart(cartData);
-      } else {
-        const cartData = await createCart();
-        if (cartData.id) {
-          localStorage.setItem("cartId", cartData.id);
+      if (user.id) {
+        if (storedCartId) {
+          const cartData = await getCart(storedCartId);
           setCart(cartData);
+        } else {
+          const cartData = await createCart(user.id);
+          if (cartData.id) {
+            localStorage.setItem("cartId", cartData.id);
+            setCart(cartData);
+          }
         }
       }
       hideBackDrop();
     })();
-  }, []);
+  }, [user]);
 
   const addItem = async (product) => {
     showBackDrop();

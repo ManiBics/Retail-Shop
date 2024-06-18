@@ -2,12 +2,15 @@ import Link from "next/link";
 import React from "react";
 import LanguageSelection from "../common/LanguageSelection";
 import { useCart } from "@/context/CartContext";
-import { Badge } from "@mui/material";
+import { Badge, IconButton, Tooltip } from "@mui/material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { useRouter } from "next/navigation";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { useUser } from "@/context/UserContext";
 
 const RetailHeader = (props) => {
-  const { cart } = useCart();
+  const { cart, cancelOrder } = useCart();
+  const { logoutHandler } = useUser();
   const router = useRouter();
 
   return (
@@ -37,14 +40,23 @@ const RetailHeader = (props) => {
               </Link>
             )
           )}
-          <Badge
-            onClick={() => router.push("/cart")}
-            badgeContent={cart?.lineItems?.length}
-            color="primary"
-            className="cursor-pointer"
-          >
-            <ShoppingCartOutlinedIcon color="action" />
-          </Badge>
+          <Tooltip title="Cart">
+            <IconButton onClick={() => router.push("/cart")}>
+              <Badge color="primary" badgeContent={cart?.lineItems?.length}>
+                <ShoppingCartOutlinedIcon color="action" />
+              </Badge>
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Logout">
+            <IconButton
+              onClick={() => {
+                logoutHandler();
+                cancelOrder();
+              }}
+            >
+              <LogoutIcon color="action" />
+            </IconButton>
+          </Tooltip>
         </nav>
       </div>
     </header>
